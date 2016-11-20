@@ -12,7 +12,7 @@
     "requirejs": "^2.3.2"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha tests/"
   },
   "author": "Leonn Leite <leonnleite@gmail.com>",
   "license": "MIT"

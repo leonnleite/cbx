@@ -1,15 +1,8 @@
 'use strict';
-//var Cbx = require ('../src/cbx.class');
-//var assert = require('assert');
+var Cbx = require ('../src/cbx.class');
+var assert = require('assert');
 
-// var assert = require('assert');
 describe('Cbx', function() {
-    describe('backgroundWidthAndHeight', () => {
-        it('should subscribe variables', () => {
-            console.log(assert);
-            expect('1').toEqual(1);
-        })
-    });
     before('populate', () => {
         let myJson = require('./fixtures/data');
         this.cbx = new Cbx(myJson);
