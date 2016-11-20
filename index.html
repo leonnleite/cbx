@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cbx</title>
+</head>
+<body>
+    <!--<div style="background-image: url('assets/500.png');">-->
+
+    <!--</div>-->
+    <div class="container" >
+
+    </div>
+    <a href="#">click</a>
+    <style>
+
+        /**
+        BACKGROUND-SIZE:
+
+        576px <-> 1400px
+        X <-> 1940px
+        ou
+        BH <-> IH
+        BW <-> IW
+        **/
+        /**
+            background-size: 798px;
+
+            width: 576px;
+            height: 576px;
+            background-size: 138.57142857%;
+            background-position-x: -222px;
+        */
+        /**
+            background-size: 1940px;
+
+            width: 420px;
+            height: 320px;
+            background-position-x: -1470px;
+            background-position-y: -1030px;
+            background-size: 462%;
+        */
+        /**
+            background-size: 798px;
+
+            width: 217px;
+            height: 576px;
+            background-size: 367%;
+        */
+
+        /**
+        width: 533px;
+        height: 313px;
+        background-position-y: -706px;
+        */
+        .container {
+            transition: all 600ms;
+            background-repeat: no-repeat;
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            transform: translate(-50%, -50%);
+
+            width: 95%; /*max width*/
+            height: 90%; /*max height*/
+        }
+        .container:after {
+            content: "\0020";
+        }
+
+
+        body {
+            transition: all 700ms;
+        }
+    </style>
+    <script type="application/javascript">
+//        var imgSrc = "assets/gis/gits-007.jpg";
+//        //imgSrc = "assets/gis/gits-005-006.jpg";
+//        window.onresize = function(event) {
+//            recalculateSize();
+//        };
+//
+//        var img = new Image();
+//        img.src = imgSrc;
+//        img.onload = function() {
+//            var element = document.getElementsByClassName('container')[0];
+//            element.style.backgroundImage = 'url("' + img.src + '")';
+//        };
+
+
+
+
+
+
+        var myJson =
+            {
+                images: [
+                    {
+                        uuid: '1',
+                        src: "assets/gis/gits-000.jpg",
+                        size: {
+                            width: 1834,
+                            height: 1400
+                        }
+                    },
+                    {
+                        uuid: '1',
+                        src: "assets/gis/gits-001.jpg",
+                        size: {
+                            width: 1605,
+                            height: 1400
+                        }
+                    },
+                    {
+                        uuid: '2',
+                        src: "assets/gis/gits-002.jpg",
+                        size: {
+                            width: 1940,
+                            height: 1400
+                        }
+                    },
+                    {
+                        uuid: '3',
+                        src: "assets/gis/gits-003.jpg",
+                        size: {
+                            width: 1940,
+                            height: 1400
+                        }
+                    },
+                    {
+                        uuid: '4',
+                        src: "assets/gis/gits-004.jpg",
+                        size: {
+                            width: 1940,
+                            height: 1400
+                        }
+                    },
+                    {
+                        uuid: 'foo',
+                        src: "assets/gis/gits-005-006.jpg",
+                        size: {
+                            width: 1940,
+                            height: 1400
+                        }
+                    },
+                    {
+                        uuid: 'bar',
+                        src: "assets/gis/gits-007.jpg",
+                        size: {
+                            width: 960,
+                            height: 1400
+                        }
+                    },
+                ],
+                steps: [
+                    {
+                        step: 1,
+                        background: "#000",
+                        size: {
+                            width: 1000,
+                            height: 2000
+                        },
+                        position: {
+                            top: 0,
+                            left: 540
+                        },
+                        image: 'foo'
+                    },
+                    {
+                        step: 2,
+                        background: "#000",
+                        size: {
+                            width: 420,
+                            height: 320
+                        },
+                        position: {
+                            top: 1470,
+                            left: 1030
+                        },
+                        image: 'foo'
+                    },
+                    {
+                        step: 3,
+                        background: "#000",
+                        size: {
+                            width: 530,
+                            height: 1400
+                        },
+                        position: {
+                            top: 0,
+                            left: 0
+                        },
+                        image: 'foo'
+                    },
+                    {
+                        step: 4,
+                        background: "#000",
+                        size: {
+                            width: 533,
+                            height: 313
+                        },
+                        position: {
+                            top: 706,
+                            left: 0
+                        },
+                        image: 'foo'
+                    },
+                    {
+                        step: 5,
+                        background: "#fff",
+                        size: {
+                            width: 890,
+                            height: 430
+                        },
+                        position: {
+                            top: 0,
+                            left: 70
+                        },
+                        image: 'bar'
+                    },
+                    {
+                        step: 6,
+                        background: "#fff",
+                        size: {
+                            width: 500,
+                            height: 760
+                        },
+                        position: {
+                            top: 640,
+                            left: 40
+                        },
+                        image: 'bar'
+                    },
+                    {
+                        step: 7,
+                        background: "#fff",
+                        size: {
+                            width: 920,
+                            height: 760
+                        },
+                        position: {
+                            top: 640,
+                            left: 40
+                        },
+                        image: 'bar'
+                    }
+                ]
+            };
+        var cbx = new Cbx(myJson);
+
+        let element = document.getElementsByClassName('container')[0];
+        //element.style.backgroundSize = cbx.getBackgroundSize();
+        element.style.backgroundPositionY = cbx.getBackgroundPositionTop() * (-1);
+        element.style.backgroundPositionX = cbx.getBackgroundPositionLeft() * (-1);
+
+        element.style.backgroundImage = 'url("' + cbx.currentStep.image.src + '")';
+        //element.style.width = cbx.getBackgroundWidth();
+console.log('====');
+console.log(cbx.getBackgroundWidth());
+console.log(cbx.getBackgroundHeight());
+console.log('====');
+
+
+        recalculateSize = function() {
+            //pega o tamanho da pagina
+
+//            let element = document.getElementsByClassName('container')[0];
+//            var imsSrc = element.style.backgroundImage.replace(/url\(["'](.*)["']\)/gm, '$1');
+//
+//
+//            var image = new CbxImage();
+//            image.src = imgSrc;
+//            image.onload = function () {
+//                let pageSize = new WindowSize();
+//                let positionSize = new PositionSize(420, 320);
+//                let scale = 1;
+//                let scaleWidth = 1;
+//                let scaleHeight = 1;
+//                if (positionSize.width > pageSize.width  * 0.8) {
+//                    scale = (pageSize.width * 0.8) / positionSize.width;
+//                    scaleWidth = scale;
+//                    scaleHeight = scale;
+//                }
+//                if (positionSize.height * scale > pageSize.height  * 0.7) {
+//                    scale = (pageSize.height * 0.7) / positionSize.height;
+//                    scaleHeight = scale;
+//                }
+//                console.log(scaleWidth);
+//            }
+            //pega o tamanho da imagem
+            //pega o tamanho que a imagem tem que ficar
+            //posiciona a imagem
+        }
+
+        recalculateSize();
+
+    </script>
+</body>
+</html>

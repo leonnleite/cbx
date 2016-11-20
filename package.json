@@ -1,0 +1,19 @@
+{
+  "name": "cbx",
+  "version": "0.1.0",
+  "description": "Comic Books Experiense",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-requirejs": "^1.1.0",
+    "mocha": "^3.1.2",
+    "requirejs": "^2.3.2"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Leonn Leite <leonnleite@gmail.com>",
+  "license": "MIT"
+}
