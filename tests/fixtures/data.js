@@ -1,4 +1,7 @@
-module.exports = {
+var myJson = {
+    config: {
+        fullWhenSmaller: true
+    },
     images: [
         {
             uuid: '1',
@@ -62,8 +65,8 @@ module.exports = {
             step: 1,
             background: "#000",
             size: {
-                width: 1000,
-                height: 2000
+                width: 1400,
+                height: 1400
             },
             position: {
                 top: 0,
@@ -79,8 +82,8 @@ module.exports = {
                 height: 320
             },
             position: {
-                top: 1470,
-                left: 1030
+                top: 1030,
+                left: 1470
             },
             image: 'foo'
         },

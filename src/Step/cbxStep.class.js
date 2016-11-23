@@ -1,11 +1,6 @@
 'use strict';
 
-let CbxSize = require('../Size/cbxSize.class');
-let CbxImage = require('../Image/cbxImage.class');
-let CbxPosition = require('../Position/cbxPosition.class');
-
-
-module.exports = class CbxStep {
+class CbxStep {
     constructor(image, size, position){
         this.background = '#000';
         this.setImage(image);
@@ -57,6 +52,14 @@ module.exports = class CbxStep {
             throw 'Expected CbxPosition Object in CbxStep[setPosition]';
         }
         this.position = position;
+    }
+
+    /**
+     *
+     * @returns CbxPosition
+     */
+    getPosition() {
+        return this.position;
     }
 
 

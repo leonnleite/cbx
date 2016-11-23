@@ -1,15 +1,10 @@
 'use strict';
 
-let CbxImage = require('./Image/cbxImage.class');
-let CbxPosition = require('./Position/cbxPosition.class');
-let CbxContainerSize = require('./Size/cbxContainerSize.class');
-let CbxSize = require('./Size/cbxSize.class');
-let CbxStep = require('./Step/cbxStep.class');
-
-module.exports = class Cbx {
+class Cbx {
     constructor(json) {
         this.images = [];
         this.steps = [];
+        this.countImagesLoaded = 0;
 
         if (!typeof json == 'object') {
             throw 'Cbx expected json object';
@@ -31,9 +26,34 @@ module.exports = class Cbx {
         /**
          * @todo refactor
          */
-        this.setContainerSize(new CbxContainerSize(100, 100));
+        this.setContainerSize(new CbxWindowSize());
         this.currentStep = this.steps[0];
         this.currentIndex = 0;
+        this.initEvents();
+    }
+
+    /**
+     * @new
+     */
+    initEvents() {
+        let imageEvent = () => {
+            this.images.forEach((image) => {
+                image.onload = () => {
+                    let event = new Event('loadedCbxImage');
+                    event.image = image;
+                    this.containerSize.element.dispatchEvent(event)
+                }
+            })
+        };
+
+        this.containerSize.element.addEventListener('loadedCbxImage', (event) => {
+            this.countImagesLoaded++;
+            if (this.countImagesLoaded == this.images.length) {
+                this.containerSize.element.dispatchEvent(new Event('finishCbxImage'))
+            }
+        });
+
+        imageEvent();
     }
 
     /**
@@ -68,41 +88,29 @@ module.exports = class Cbx {
     }
 
     getBackgroundSize() {
-        let imageRatio = this.currentStep.image.size.getRatio();
-        let windowRatio = this.currentStep.size.getRatio();
+        let width = this.getBackgroundWidth();
+        let cropWidth = this.currentStep.getSize().width;
+        let originalWidth = this.currentStep.getImage().getSize().width;
+        return originalWidth / cropWidth * width;
         //step 2 = 1940/420
-        return (imageRatio/windowRatio * 100) + '%';
+        //1940/1400*578,7
+
     }
 
     getBackgroundPositionTop() {
-        if (this.currentStep.position.top == 0) {
-            return 0;
-        }
+        let top = this.getBackgroundHeight() / this.currentStep.getSize().height;
+        top *= this.currentStep.getPosition().top;
+        top *= -1;
+        return top;
     }
 
     getBackgroundPositionLeft() {
-        if (this.currentStep.position.left == 0) {
-            return 0;
-        }
-    }
-
-
-    __isContainerWidthLowerThenStep() {
-        return (this.containerSize.width < this.currentStep.size.width);
-    }
-    __isContainerHeightLowerThenStep() {
-        return (this.containerSize.height < this.currentStep.size.height);
-    }
-
-    __getDimension() {
-        if (!this.__isBothSizeLower()) {
-            return;
-        }
-        if ((this.containerSize.width / this.currentStep.size.width) >
-            (this.containerSize.height / this.currentStep.size.height)) {
-            return 'height';
-        }
-        return 'width';
+        let width = this.getBackgroundWidth()
+        let stepWidth = this.currentStep.getSize().width;
+        let left = width / stepWidth;
+        left *= this.currentStep.getPosition().left;
+        left *= -1;
+        return left;
     }
 
     getBackgroundWidth() {
@@ -134,71 +142,8 @@ module.exports = class Cbx {
 
     }
 
-    _getBackgroundWidth() {
-
-        if ((!this.__isContainerWidthLowerThenStep() && !this.__isContainerHeightLowerThenStep())) {
-            return this.currentStep.width;
-        }
-
-        if (this.__isContainerWidthLowerThenStep()) {
-            if (this.__isContainerHeightLowerThenStep()) {
-                console.log('nem sei simular')
-                if (this.containerSize.isPortrait()) {
-                    console.log('foo');
-                    if (this.currentStep.size.isPortrait()) {
-                        console.log('bar');
-                        return this.containerSize.width;
-                    }
-                    return this.containerSize.width;
-                }
-                if (this.currentStep.size.isLandscape()) {
-                    console.log('baz');
-                    return this.containerSize.width;
-                }
-                console.log('bux');
-                return this.containerSize.height;
-            }
-            return this.containerSize.width;
-        }
-        return this.currentStep.size.width / (this.currentStep.size.height / this.containerSize.height);
-
-        return ;
-        if (this.containerSize.isPortrait()) {
-            if (this.currentStep.size.isPortrait()) {
-                return 1;
-            }
-            return 1;
-        }
-
-        return ;
-
-        let dimension = this.__getDimension()
-        if (dimension) {
-            if (dimension == 'width') {
-                return this.containerSize.width;
-            }
-            let heightScale = this.containerSize.height / this.currentStep.size.height;
-            let width = this.currentStep.size.width * heightScale;
-            if (width > this.containerSize.width) {
-                return this.containerSize.width;
-            }
-            return width;
-        }
-
-        if (this.__isWidthSizeLower() && !this.__isHeightSizeLower()) {
-            return this.currentStep.size.width;
-        }
-
-        if (!this.__isHeightSizeLower() && this.__isHeightSizeLower()) {
-            return this.currentStep.size.width;
-        }
-
-    }
-
     getBackgroundHeight() {
         return this.getBackgroundWidth() / this.currentStep.size.getRatio();
     }
-
-
 
 }
